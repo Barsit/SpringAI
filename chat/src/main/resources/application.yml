@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: chat
+
+  ai:
+    openai:
+      api-key: sk-LnqQOtzaDT9ffM9h56FfC944Ce0a4811AaFd2d635aDaDeEf
+      base-url: https://api.huida.app
