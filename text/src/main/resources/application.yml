@@ -1,8 +1,10 @@
 spring:
   application:
     name: chat
+
   ai:
     openai:
       api-key: sk-uMQF77phF7Cc0gW2908548F1Ba9f4fA4A9Cc0e383b4eBb9e
       base-url: https://api.wlai.vip
-
+server:
+  port: 8081
