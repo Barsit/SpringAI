@@ -8,6 +8,7 @@ import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 /**
  * @description:
@@ -42,10 +43,22 @@ public class ChatController {
     @RequestMapping(value = "/ai/chat3")
     public Object chat3(@RequestParam(value = "msg") String msg){
         ChatResponse chatResponse = openAiChatClient.call(new Prompt(msg, OpenAiChatOptions.builder()
-                .withModel("gpt-3-turbo")
+//                .withModel("gpt-3-turbo")
                 .withTemperature(0.7F)
                 .build()));
         return chatResponse.getResult().getOutput().getContent();
+
+    }
+
+    @RequestMapping(value = "/ai/chat4")
+    public Object chat4(@RequestParam(value = "msg") String msg){
+        Flux<ChatResponse> flux = openAiChatClient.stream(new Prompt(msg, OpenAiChatOptions.builder()
+                .withTemperature(0.7F)
+                .build()));
+       flux.toStream().forEach(chatResponse -> {
+            System.out.println(chatResponse.getResult().getOutput().getContent());
+        });
+       return flux.collectList();
 
     }
 
